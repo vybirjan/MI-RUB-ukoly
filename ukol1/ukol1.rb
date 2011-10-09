@@ -89,41 +89,41 @@ end
 graphs = Array.new
 
 
-File.open("input.txt","r") {|f|
-  #read number of graphs
-  numOfGraphs = f.gets.to_i
+
+#read number of graphs
+numOfGraphs = STDIN.gets.to_i
+
+numOfGraphs.times {|g|
+  numOfNodes = STDIN.gets.to_i
+  #create new graph
+  graphs[g] = Graph.new(numOfNodes)
   
-  numOfGraphs.times {|g|
-    numOfNodes = f.gets.to_i
-    #create new graph
-    graphs[g] = Graph.new(numOfNodes)
+  #add nodes to graph
+  numOfNodes.times {|node|
+    line = STDIN.gets.split(" ")
+    nodeNum = line[0].to_i
+    currentNode = graphs[g].nodes[nodeNum]
+    numOfNeighbors = line[1].to_i
     
-    #add nodes to graph
-    numOfNodes.times {|node|
-      line = f.gets.split(" ")
-      nodeNum = line[0].to_i
-      currentNode = graphs[g].nodes[nodeNum]
-      numOfNeighbors = line[1].to_i
-      
-      numOfNeighbors.times {|i|
-        neighborNum = line[i + 2].to_i
-        currentNode.neighbors[i] = graphs[g].nodes[neighborNum]
-      }
+    numOfNeighbors.times {|i|
+      neighborNum = line[i + 2].to_i
+      currentNode.neighbors[i] = graphs[g].nodes[neighborNum]
     }
-    
-    #read queries for current graph
-    i = 0
-    while(true)
-      line = f.gets.split(" ")
-      #stop at line 0 0
-      if(line[0].eql?("0") & line[1].eql?("0"))
-        break
-      end 
-      graphs[g].queries[i] = Query.new(line[0].to_i, line[1].to_i)
-      i = i + 1
-    end
   }
+  
+  #read queries for current graph
+  i = 0
+  while(true)
+    line = STDIN.gets.split(" ")
+    #stop at line 0 0
+    if(line[0].eql?("0") & line[1].eql?("0"))
+      break
+    end 
+    graphs[g].queries[i] = Query.new(line[0].to_i, line[1].to_i)
+    i = i + 1
+  end
 }
+
 
 grNum = 1
 graphs.each{|graph|
