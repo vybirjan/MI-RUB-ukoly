@@ -59,10 +59,14 @@ class BrainfuckParser
       end
       @current_column = @current_column + 1
     }
+    return self
   end
   
   def get_start
-    @loop_starts.pop
+    if(@previous_command.is_a?(LoopEnd))
+      @loop_starts.pop
+    end
+    
     if(!@loop_starts.empty?)
       start = @loop_starts.pop
       raise BrainfuckParseError.new("Unexpected end of file - unclosed loop found", start.line, start.column)

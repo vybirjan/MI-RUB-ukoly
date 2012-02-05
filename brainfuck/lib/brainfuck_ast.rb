@@ -219,7 +219,7 @@ end
 class LoopStart < AstElement
  
   attr_reader :next
-  attr_writer :loopEnd
+  attr_accessor :loopEnd
   
   def eval(context)
     if(context.get_value == 0)
@@ -231,7 +231,7 @@ class LoopStart < AstElement
 end
 
 class LoopEnd < AstElement
-  attr_writer :loopHead
+  attr_accessor :loopHead
   
   def eval(context)
     if(context.get_value != 0)
